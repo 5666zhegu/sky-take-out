@@ -30,4 +30,7 @@ public interface DishMapper {
 
 
     void deleteBatch(List<Long> ids);
+
+    @Select("select d.*,c.name categoryName from dish d left join category c on d.category_id = c.id where d.id = #{id}")
+    DishVO getDishVOById(Long id);
 }
