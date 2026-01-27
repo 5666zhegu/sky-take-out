@@ -28,6 +28,7 @@
         </where>
         order by update_time desc
     </select>
+
     <delete id="deleteBatch">
         delete from dish where id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
@@ -49,4 +50,17 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="getByCategoryId" resultType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
 </mapper>
