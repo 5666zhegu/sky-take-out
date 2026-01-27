@@ -5,7 +5,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
-import com.sky.service.DIshService;
+import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("/admin/dish")
 @Slf4j
 @Api(tags = "菜品相关接口")
-public class DIshController {
+public class DishController {
 
     @Autowired
-    private DIshService dishService;
+    private DishService dishService;
 
     @ApiOperation("新增菜品功能")
     @PostMapping
@@ -73,4 +73,14 @@ public class DIshController {
         List<Dish> list = dishService.getByCategoryId(categoryId);
         return Result.success(list);
     }
+
+    @ApiOperation("起售停售")
+    @PostMapping("/status/{status}")
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        log.info("起售停售:{},{}",status == 1 ? "起售" : "停售" , id);
+        dishService.startOrStop(status,id);
+        return Result.success();
+    }
+
+
 }

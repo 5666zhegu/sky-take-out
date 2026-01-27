@@ -8,7 +8,7 @@ import com.sky.vo.DishVO;
 
 import java.util.List;
 
-public interface DIshService {
+public interface DishService {
     void save(DishDTO dishDTO);
 
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
@@ -20,4 +20,6 @@ public interface DIshService {
     void update(DishDTO dishDTO);
 
     List<Dish> getByCategoryId(Long id);
+
+    void startOrStop(Integer status, Long id);
 }

@@ -51,6 +51,7 @@
         where id = #{id}
     </update>
 
+
     <select id="getByCategoryId" resultType="com.sky.entity.Dish">
         select * from dish
         <where>
@@ -63,4 +64,14 @@
         </where>
         order by update_time desc
     </select>
+
+    <update id="startOrStop">
+        update dish
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
