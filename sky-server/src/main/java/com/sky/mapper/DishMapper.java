@@ -1,12 +1,16 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.annotation.AutoFill;
+import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.SetmealDish;
+import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ public interface DishMapper {
     @Select("select count(id) from dish where category_id = #{id}")
     Integer countByCategoryId(Long id);
 
+    @AutoFill(OperationType.INSERT)
     void insert(Dish dish);
 
     Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
@@ -33,4 +38,7 @@ public interface DishMapper {
 
     @Select("select d.*,c.name categoryName from dish d left join category c on d.category_id = c.id where d.id = #{id}")
     DishVO getDishVOById(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Dish dish);
 }

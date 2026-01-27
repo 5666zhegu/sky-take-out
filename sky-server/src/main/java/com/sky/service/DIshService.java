@@ -15,4 +15,6 @@ public interface DIshService {
     void deleteBatch(List<Long> ids);
 
     DishVO getById(Long id);
+
+    void update(DishDTO dishDTO);
 }
