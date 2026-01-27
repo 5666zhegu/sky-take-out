@@ -1,10 +1,12 @@
 package com.sky.controller.admin;
 
+import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
 import com.sky.utils.AliOssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ public class CommonController {
             return Result.success(filePath);
         } catch (IOException e) {
             log.error("文件上传失败:{}",e);
-            return Result.error("文件上传失败");
+            return Result.error(MessageConstant.UPLOAD_FAILED);
         }
 
     }
