@@ -110,6 +110,7 @@ public class DishServiceImpl implements DishService {
      * @param id
      * @return
      */
+    @Transactional
     public DishVO getById(Long id) {
 
         DishVO dishVO = dishMapper.getDishVOById(id);
@@ -124,6 +125,7 @@ public class DishServiceImpl implements DishService {
      *
      * @param dishDTO
      */
+    @Transactional
     public void update(DishDTO dishDTO) {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
@@ -162,6 +164,7 @@ public class DishServiceImpl implements DishService {
      * @param status
      * @param id
      */
+    @Transactional
     public void startOrStop(Integer status, Long id) {
         if (status == StatusConstant.DISABLE) {
             List<Long> setmealIdbyDishIdes = setmealDishMapper.getSetmealIdbyDishId(id);
