@@ -37,4 +37,7 @@ public interface SetmealMapper {
 
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
+
+    @AutoFill(OperationType.UPDATE)
+    void startOrStop(Setmeal setmeal);
 }
