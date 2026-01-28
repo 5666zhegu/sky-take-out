@@ -34,4 +34,7 @@ public interface SetmealMapper {
 
     @Select("select s.*,c.name categoryName from setmeal s left join category c on c.id = s.category_id where s.id = #{id}")
     SetmealVO getVOWithId(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
