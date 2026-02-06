@@ -4,6 +4,7 @@ import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.result.PageResult;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -43,5 +44,7 @@ public interface CategoryService {
      * @param type
      * @return
      */
-    List<Category> list(Long type);
+    List<Category> list(Integer type);
+
+
 }

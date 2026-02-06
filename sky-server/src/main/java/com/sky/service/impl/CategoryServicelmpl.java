@@ -109,7 +109,7 @@ public class CategoryServicelmpl implements CategoryService {
      * @param type
      * @return
      */
-    public List<Category> list(Long type) {
+    public List<Category> list(Integer type) {
         List<Category> list = categoryMapper.list(type);
         return list;
     }

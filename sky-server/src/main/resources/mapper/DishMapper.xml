@@ -24,7 +24,6 @@
             <if test="status != null">
                 and d.status = #{status}
             </if>
-
         </where>
         order by update_time desc
     </select>
@@ -65,6 +64,7 @@
         order by update_time desc
     </select>
 
+
     <update id="startOrStop">
         update dish
         <set>
@@ -74,4 +74,16 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="list" resultType="com.sky.entity.Dish" parameterType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+        <if test="categoryId != null">
+            and category_id = #{categoryId}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        </where>
+    </select>
 </mapper>

@@ -9,6 +9,7 @@ import com.sky.vo.DishVO;
 import java.util.List;
 
 public interface DishService {
+
     void save(DishDTO dishDTO);
 
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
@@ -22,4 +23,8 @@ public interface DishService {
     List<Dish> getByCategoryId(Long id);
 
     void startOrStop(Integer status, Long id);
+
+
+    List<DishVO> listWithFlavor(Dish dish);
+
 }
