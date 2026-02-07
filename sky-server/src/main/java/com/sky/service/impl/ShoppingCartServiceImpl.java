@@ -41,7 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber()+1);
             shoppingCartMapper.updateNumber(cart);
-
+            return;
         }
         Long dishId = shoppingCart.getDishId();
         if(dishId != null){
@@ -84,5 +84,26 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .userId(userId)
                 .build();
         shoppingCartMapper.delete(shoppingCart);
+    }
+
+    /**
+     * 删减餐购物车餐品数目
+     * @param shoppingCartDTO
+     */
+    @Transactional
+    public void sub(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO,shoppingCart);
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+        List<ShoppingCart> list = shoppingCartMapper.select(shoppingCart);
+        ShoppingCart cart = list.get(0);
+        if(cart.getNumber() > 1){
+            cart.setNumber(cart.getNumber() - 1);
+            shoppingCartMapper.updateNumber(cart);
+        }else{
+            shoppingCartMapper.deleteBysub(cart);
+        }
+
     }
 }
