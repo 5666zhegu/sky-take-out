@@ -65,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(ordersSubmitDTO,orders);
         orders.setOrderTime(LocalDateTime.now());
         orders.setUserId(userId);
+        orders.setAddress(addressBook.getDetail());
         orders.setPhone(addressBook.getPhone());
         orders.setConsignee(addressBook.getConsignee());
         orders.setStatus(Orders.PENDING_PAYMENT);
@@ -172,6 +173,19 @@ public class OrderServiceImpl implements OrderService {
         long total = page.getTotal();
 
         return new PageResult(total,result);
+    }
+
+    /**
+     * 根据id查询订单详情
+     * @param id
+     * @return
+     */
+    public OrderVO getById(Long id) {
+        OrderVO orderVO = orderMapper.getById(id);
+        List<OrderDetail> orderDetails = ordersDetailMapper.getByOrderId(id);
+        orderVO.setOrderDetailList(orderDetails);
+
+        return orderVO;
     }
 
 

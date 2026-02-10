@@ -36,4 +36,7 @@ public interface OrderMapper {
      * @return
      */
     Page<OrderVO> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    @Select("select * from orders where id = #{id}")
+    OrderVO getById(Long id);
 }
