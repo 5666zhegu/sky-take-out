@@ -147,6 +147,32 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    /**
+     * 历史订单查询
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    public PageResult pageQuery(int pageNum, int pageSize, Integer status) {
+        PageHelper.startPage(pageNum,pageSize);
+        OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
+        ordersPageQueryDTO.setStatus(status);
+        ordersPageQueryDTO.setUserId(BaseContext.getCurrentId());
+        Page<OrderVO> page = orderMapper.pageQuery(ordersPageQueryDTO);
+        List<OrderVO> result = page.getResult();
+        if(page != null && page.getTotal() > 0){
+            for(OrderVO orderVO : page){
+                Long id = orderVO.getId();
+                List<OrderDetail> orderDetails = ordersDetailMapper.getByOrderId(id);
+                orderVO.setOrderDetailList(orderDetails);
+            }
+        }
+        long total = page.getTotal();
+
+        return new PageResult(total,result);
+    }
 
 
 }

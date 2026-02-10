@@ -46,6 +46,13 @@ public class OrderController {
         return Result.success(orderPaymentVO);
     }
 
+    @GetMapping("/historyOrders")
+    @ApiOperation("查询历史订单")
+    public Result<PageResult> page(int page, int pageSize, Integer status){
+        PageResult pageResult = orderService.pageQuery(page,pageSize,status);
+        return Result.success(pageResult);
+    }
+
 
 
 }

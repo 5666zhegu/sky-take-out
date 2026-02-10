@@ -30,4 +30,12 @@ public interface OrderService {
     void paySuccess(String outTradeNo);
 
 
+    /**
+     * 历史订单查询
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    PageResult pageQuery(int page, int pageSize, Integer status);
 }
