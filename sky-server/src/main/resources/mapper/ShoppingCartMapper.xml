@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sky.mapper.ShoppingCartMapper">
 
-
     <select id="select" resultType="com.sky.entity.ShoppingCart" parameterType="com.sky.entity.ShoppingCart">
         select * from shopping_cart
         <where>
@@ -38,6 +37,17 @@
                 and user_id = #{userId}
             </if>
         </where>
+
+
     </delete>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into shopping_cart (name,image,user_id,dish_id,setmeal_id,dish_flavor,number,amount,create_time)
+        values
+        <foreach collection="list" item="shoppingCart" separator=",">
+            (#{shoppingCart.name},#{shoppingCart.image},#{shoppingCart.userId},#{shoppingCart.dishId},#{shoppingCart.setmealId},#{shoppingCart.dishFlavor},#{shoppingCart.number},#{shoppingCart.amount},#{shoppingCart.createTime})
+        </foreach>
+    </insert>
+
 
 </mapper>
