@@ -40,5 +40,16 @@ public interface OrderService {
      */
     PageResult pageQuery(int page, int pageSize, Integer status);
 
+    /**
+     * 根据id查询订单详情
+     * @param id
+     * @return
+     */
     OrderVO getById(Long id);
+
+    /**
+     * 用户取消订单
+     * @param id
+     */
+    void userCancelById(Long id) throws Exception;
 }
