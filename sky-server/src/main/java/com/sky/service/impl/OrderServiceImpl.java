@@ -14,20 +14,27 @@ import com.sky.exception.OrderBusinessException;
 import com.sky.exception.ShoppingCartBusinessException;
 import com.sky.mapper.*;
 import com.sky.result.PageResult;
+import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.sky.entity.Orders.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -141,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
         // 根据订单id更新订单的状态、支付方式、支付状态、结账时间
         Orders orders = Orders.builder()
                 .id(ordersDB.getId())
-                .status(Orders.TO_BE_CONFIRMED)
+                .status(TO_BE_CONFIRMED)
                 .payStatus(Orders.PAID)
                 .checkoutTime(LocalDateTime.now())
                 .build();
@@ -214,7 +221,7 @@ public class OrderServiceImpl implements OrderService {
         //TODO 待开发
 
         // 订单处于待接单状态下取消，需要进行退款
-        if (ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+        if (ordersDB.getStatus().equals(TO_BE_CONFIRMED)) {
             //调用微信支付退款接口
 //            weChatPayUtil.refund(
 //                    ordersDB.getNumber(), //商户订单号
@@ -268,6 +275,22 @@ public class OrderServiceImpl implements OrderService {
         long total = page.getTotal();
         List<OrderVO> records = page.getResult();
         return new PageResult(total, records);
+    }
+
+    /**
+     * 统计各状态订单数据
+     * @return
+     */
+    public OrderStatisticsVO statistics() {
+        Integer tobeconfirmed = orderMapper.countStatus(TO_BE_CONFIRMED);
+        Integer confirmed = orderMapper.countStatus(CONFIRMED);
+        Integer deliveryInProgress = orderMapper.countStatus(DELIVERY_IN_PROGRESS);
+        OrderStatisticsVO orderStatisticsVO = OrderStatisticsVO.builder()
+                .toBeConfirmed(tobeconfirmed)
+                .confirmed(confirmed)
+                .deliveryInProgress(deliveryInProgress)
+                .build();
+        return orderStatisticsVO;
     }
 
 
