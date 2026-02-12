@@ -25,6 +25,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -291,6 +292,17 @@ public class OrderServiceImpl implements OrderService {
                 .deliveryInProgress(deliveryInProgress)
                 .build();
         return orderStatisticsVO;
+    }
+
+    /**
+     * 获取订单详情
+     * @param id
+     * @return
+     */
+    public OrderVO getDetailById(Long id) {
+        OrderVO orderVO = orderMapper.getById(id);
+        orderVO.setOrderDetailList(ordersDetailMapper.getByOrderId(id));
+        return orderVO;
     }
 
 
