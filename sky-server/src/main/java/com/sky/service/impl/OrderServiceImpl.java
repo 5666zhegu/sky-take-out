@@ -401,6 +401,24 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orderDelivery);
     }
 
+    /**
+     * 完成订单
+     * @param id
+     */
+    public void complete(Long id) {
+        OrderVO order = orderMapper.getById(id);
+        Integer status = order.getStatus();
+        if(order == null || status != DELIVERY_IN_PROGRESS){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+        Orders complete = builder()
+                .id(id)
+                .status(COMPLETED)
+                .deliveryTime(LocalDateTime.now())
+                .build();
+        orderMapper.update(complete);
+    }
+
 
 }
 
