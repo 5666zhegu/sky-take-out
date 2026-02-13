@@ -356,7 +356,7 @@ public class OrderServiceImpl implements OrderService {
     public void cancel(OrdersCancelDTO ordersCancelDTO) {
         OrderVO orderDB = orderMapper.getById(ordersCancelDTO.getId());
         Integer status = orderDB.getStatus();
-        if(status != CONFIRMED){
+        if(orderDB == null||status != CONFIRMED){
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
 
@@ -378,6 +378,27 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(cancel);
+    }
+
+    /**
+     * 派送订单
+     * @param id
+     */
+    public void delivery(Long id) {
+        OrderVO order = orderMapper.getById(id);
+        Integer status = order.getStatus();
+        if(order == null || status != CONFIRMED){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Orders orderDelivery = builder()
+                .id(id)
+                .status(DELIVERY_IN_PROGRESS)
+                .deliveryStatus(1)
+                .deliveryTime(LocalDateTime.now())
+                .build();
+
+        orderMapper.update(orderDelivery);
     }
 
 
