@@ -1,11 +1,13 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
 import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.core.annotation.Order;
 
 @Mapper
@@ -42,4 +44,8 @@ public interface OrderMapper {
 
     @Select("select count(*) from orders where status = #{comfiemed}")
     Integer countStatus(Integer confirmed);
+
+
+    @Update("update orders set status = #{status} where id = #{id}")
+    void confirm(OrdersConfirmDTO ordersConfirmDTO);
 }
