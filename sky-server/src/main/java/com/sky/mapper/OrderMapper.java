@@ -55,4 +55,8 @@ public interface OrderMapper {
 
 
     Double sumAmount(Map map);
+
+    Integer sumOrderNumber(Map map);
+
+    Integer sumValidOrderNumber(Map map);
 }
