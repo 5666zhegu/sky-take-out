@@ -10,6 +10,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.core.annotation.Order;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
     /**
@@ -46,6 +49,6 @@ public interface OrderMapper {
     Integer countStatus(Integer confirmed);
 
 
-    @Update("update orders set status = #{status} where id = #{id}")
-    void confirm(OrdersConfirmDTO ordersConfirmDTO);
+    @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
+    List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 }
