@@ -45,8 +45,11 @@ public interface OrderMapper {
      */
     Page<OrderVO> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
+
+
     @Select("select * from orders where id = #{id}")
     OrderVO getById(Long id);
+
 
     @Select("select count(*) from orders where status = #{comfiemed}")
     Integer countStatus(Integer confirmed);
@@ -56,11 +59,39 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 
 
+
+
+    /**
+     * 统计订单总金额
+     * @param map
+     * @return
+     */
     Double sumAmount(Map map);
 
+    /**
+     * 统计订单数量
+     * @param map
+     * @return
+     */
     Integer sumOrderNumber(Map map);
-
+    /**
+     * 统计有效订单数量
+     * @param map
+     * @return
+     */
     Integer sumValidOrderNumber(Map map);
-
+    /**
+     * 获取销量排名top10
+      * @param beginTime
+      * @param endTime
+     * @return
+     */
     List<GoodsSalesDTO> getGoodSalesTop10(LocalDateTime beginTime, LocalDateTime endTime);
+
+    /**
+     * 获取订单状态数据
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
